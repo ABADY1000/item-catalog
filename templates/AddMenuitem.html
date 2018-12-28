@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New MenuItem</title>
+</head>
+<body>
+    <h1>Add New MenuItem</h1>
+    <form action="{{url_for('add_new_menuitem', restaurantID=resID)}}" method="POST">
+        <label>Name</label>
+        <input type="text" name="name">
+        <br>
+        <label>Description</label>
+        <input type="text" name="description">
+        <br>
+        <label>Price</label>
+        <input type="text" name="price" >
+        <br>
+        <input type="radio" name="course" value="Appetizer" checked>Appetizer<br>
+        <input type="radio" name="course" value="Entree">Entree<br>
+        <input type="radio" name="course" value="Dessert">Dessert<br>
+        <input type="radio" name="course" value="Beverage">Beverage<br>
+        <input type="submit" value="Add">
+    </form>
+</body>
+</html>

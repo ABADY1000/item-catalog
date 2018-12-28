@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='showRestaurant.css')}}"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if 'username' not in login_session %}
+        <a href="{{url_for('user_login')}}">
+            log in
+        </a>
+    {% else %}
+        <a href="{{url_for('gdisconnect')}}">
+            log out
+        </a>
+    {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    <h2>Restaurants List</h2>
+    <ul>
+        {% for res in restaurants %}
+        <li>
+            <a href="{{url_for('show_menuitem',restaurantID=res.id)}}" >
+                "{{res['name']}}"
+            </a>
+            <br>
+            {% if 'username' in login_session %}
+                <a href="{{url_for('edit_restaurant',restaurantID=res.id)}}" >
+                    edit
+                </a>
+                <br>
+                <a href="{{url_for('delete_restaurant',restaurantID=res.id)}}" >
+                    delete
+                </a>
+            {% endif %}
+            <br><br>
+        </li>
+
+        {% endfor %}
+    </ul>
+    {% if 'username' in login_session %}
+        <h4>Add New Restaurant</h4>
+        <a href="{{url_for('add_new_restaurant')}}">Add</a>
+    {% endif %}
+</body>
+</html>
