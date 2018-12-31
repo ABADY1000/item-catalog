@@ -31,6 +31,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+
 # Helper Function: login checker (Decorator)
 def login_checker(f):
     def wrapper():
@@ -44,6 +45,7 @@ def login_checker(f):
 def user_existence(username):
     available_users = session.query(User).all()
     if any([u.name == username for u in available_users]):
+        return redirect('/')
     else:
         user = User(name=username)
         session.add(user)
@@ -80,7 +82,8 @@ def add_new_restaurant():
 @login_checker
 @app.route('/restaurants/<int:restaurantID>/edit', methods=["POST", "GET"])
 def edit_restaurant(restaurantID):
-    user = session.query(User).filter_by(name=login_session['username']).first()
+    user = session.query(User).
+    filter_by(name=login_session['username']).first()
     restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
     if restaurant.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -103,7 +106,8 @@ def edit_restaurant(restaurantID):
 @login_checker
 @app.route('/restaurants/<int:restaurantID>/delete', methods=["GET", "POST"])
 def delete_restaurant(restaurantID):
-    user = session.query(User).filter_by(name=login_session['username']).first()
+    user = session.query(User).
+    filter_by(name=login_session['username']).first()
     restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
     if restaurant.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -161,7 +165,8 @@ def add_new_menuitem(restaurantID):
 @app.route('/restaurants/<int:restaurantID>/'
            'edit/<int:menuitemID>', methods=["GET", "POST"])
 def edit_menuitem(restaurantID, menuitemID):
-    user = session.query(User).filter_by(name=login_session['username']).first()
+    user = session.query(User).
+    filter_by(name=login_session['username']).first()
     menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
     if menuitem.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -191,7 +196,8 @@ def edit_menuitem(restaurantID, menuitemID):
 @app.route('/restaurant/<int:restaurantID>/delete/'
            '<int:menuitemID>', methods=["GET", "POST"])
 def delete_menuitem(restaurantID, menuitemID):
-    user = session.query(User).filter_by(name=login_session['username']).first()
+    user = session.query(User).
+    filter_by(name=login_session['username']).first()
     menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
     if menuitem.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -299,7 +305,7 @@ def gconnect():
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
-    #Check if user exist in the data base amd add if not...
+    # Check if user exist in the data base amd add if not...
     user_existence(login_session['username'])
 
     output = '<body>'
