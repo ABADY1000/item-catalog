@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4dd5e907-ded9-4417-a81c-d62d5ae82e6e" name="Default Changelist" comment="" />
+    <list default="true" id="4dd5e907-ded9-4417-a81c-d62d5ae82e6e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/finalproject.py" beforeDir="false" afterPath="$PROJECT_DIR$/finalproject.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,27 +17,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/finalproject.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="10" column="54" selection-start-line="10" selection-start-column="54" selection-end-line="10" selection-end-column="54" />
+            <state relative-caret-position="183">
+              <caret line="201" column="8" selection-start-line="201" selection-start-column="8" selection-end-line="201" selection-end-column="8" />
               <folding>
-                <element signature="e#826#943#0" />
-                <element signature="e#1207#1400#0" />
-                <element signature="e#857#1032#0" />
-                <element signature="e#1409#1863#0" />
-                <element signature="e#2402#3102#0" />
-                <element signature="e#3434#4230#0" />
-                <element signature="e#3439#3741#0" />
-                <element signature="e#3786#4625#0" />
-                <element signature="e#5889#7085#0" />
-                <element signature="e#7285#8070#0" />
-                <element signature="e#6648#6752#0" />
-                <element signature="e#6910#7027#0" />
-                <element signature="e#7208#7304#0" />
-                <element signature="e#7363#7552#0" />
-                <element signature="e#7637#10661#0" />
+                <element signature="e#0#13#0" expanded="true" />
+                <element signature="e#9228#12360#0" />
                 <element signature="e#10739#11836#0" />
                 <element signature="e#11884#11978#0" />
               </folding>
@@ -43,10 +32,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/menus.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
+            <state relative-caret-position="1740">
               <caret line="197" selection-start-line="197" selection-end-line="197" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
@@ -263,7 +252,7 @@
       <workItem from="1545716906063" duration="2272000" />
       <workItem from="1545729198279" duration="21476000" />
       <workItem from="1545994261319" duration="7312000" />
-      <workItem from="1546025321355" duration="11499000" />
+      <workItem from="1546025321355" duration="12353000" />
     </task>
     <task id="LOCAL-00001" summary="All the app is finished, the rest is:&#10;1- Styling&#10;2- Adding API endpoints.&#10;3- Adding Authorization">
       <created>1545484276382</created>
@@ -283,7 +272,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87000000" />
+    <option name="totallyTimeSpent" value="87854000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="4" width="1536" height="836" extended-state="0" />
@@ -436,32 +425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/finalproject.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="10" column="54" selection-start-line="10" selection-start-column="54" selection-end-line="10" selection-end-column="54" />
-          <folding>
-            <element signature="e#826#943#0" />
-            <element signature="e#1207#1400#0" />
-            <element signature="e#857#1032#0" />
-            <element signature="e#1409#1863#0" />
-            <element signature="e#2402#3102#0" />
-            <element signature="e#3434#4230#0" />
-            <element signature="e#3439#3741#0" />
-            <element signature="e#3786#4625#0" />
-            <element signature="e#5889#7085#0" />
-            <element signature="e#7285#8070#0" />
-            <element signature="e#6648#6752#0" />
-            <element signature="e#6910#7027#0" />
-            <element signature="e#7208#7304#0" />
-            <element signature="e#7363#7552#0" />
-            <element signature="e#7637#10661#0" />
-            <element signature="e#10739#11836#0" />
-            <element signature="e#11884#11978#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataSetup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="858">
@@ -476,10 +439,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/menus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
+        <state relative-caret-position="1740">
           <caret line="197" selection-start-line="197" selection-end-line="197" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finalproject.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="201" column="8" selection-start-line="201" selection-start-column="8" selection-end-line="201" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#9228#12360#0" />
+            <element signature="e#10739#11836#0" />
+            <element signature="e#11884#11978#0" />
           </folding>
         </state>
       </provider>

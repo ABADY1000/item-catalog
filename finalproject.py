@@ -70,7 +70,8 @@ def add_new_restaurant():
         if request.form['name']:
             newID = session.query(Restaurant).count() + 1
             name = request.form['name']
-            session.add(Restaurant(id=newID, name=name))
+            user = session.query(User).filter_by(name=login_session['username']).first()
+            session.add(Restaurant(id=newID, name=name, user_id=user.id))
             session.commit()
             flash('Restauran {} is added successfully.'.format(name))
         return redirect(url_for('show_restaurant'))
@@ -82,8 +83,8 @@ def add_new_restaurant():
 @login_checker
 @app.route('/restaurants/<int:restaurantID>/edit', methods=["POST", "GET"])
 def edit_restaurant(restaurantID):
-    user = session.query(User).
-    filter_by(name=login_session['username']).first()
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
     restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
     if restaurant.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -106,8 +107,8 @@ def edit_restaurant(restaurantID):
 @login_checker
 @app.route('/restaurants/<int:restaurantID>/delete', methods=["GET", "POST"])
 def delete_restaurant(restaurantID):
-    user = session.query(User).
-    filter_by(name=login_session['username']).first()
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
     restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
     if restaurant.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -149,9 +150,10 @@ def add_new_menuitem(restaurantID):
             price = request.form['price']
             course = request.form['course']
             newID = session.query(MenuItem).count() + 1
+            user = session.query(User).filter_by(name=login_session['username']).first()
             item = MenuItem(name=name, description=description,
                             price=price, course=course, id=newID,
-                            restaurant_id=restaurantID)
+                            restaurant_id=restaurantID, user_id=user.id)
             session.add(item)
             session.commit()
             flash('Item {} is added successfully.'.format(name))
@@ -165,8 +167,8 @@ def add_new_menuitem(restaurantID):
 @app.route('/restaurants/<int:restaurantID>/'
            'edit/<int:menuitemID>', methods=["GET", "POST"])
 def edit_menuitem(restaurantID, menuitemID):
-    user = session.query(User).
-    filter_by(name=login_session['username']).first()
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
     menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
     if menuitem.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
@@ -196,8 +198,8 @@ def edit_menuitem(restaurantID, menuitemID):
 @app.route('/restaurant/<int:restaurantID>/delete/'
            '<int:menuitemID>', methods=["GET", "POST"])
 def delete_menuitem(restaurantID, menuitemID):
-    user = session.query(User).
-    filter_by(name=login_session['username']).first()
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
     menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
     if menuitem.user_id != user.id:
         flash('{} has no access to this data modification'.format(user.name))
