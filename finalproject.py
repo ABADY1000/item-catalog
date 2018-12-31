@@ -8,11 +8,19 @@ import requests
 from colorama import Fore, Style
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from DataSetup import Base, MenuItem, Restaurant
+from DataSetup import Base, MenuItem, Restaurant, User
 
-from flask import Flask, url_for, render_template, redirect,\
-    request, jsonify, make_response, json, flash
 from flask import session as login_session
+from flask import (Flask,
+                   url_for,
+                   render_template,
+                   redirect,
+                   request,
+                   jsonify,
+                   make_response,
+                   json,
+                   flash)
+
 
 app = Flask(__name__)
 CLIENT_ID = json.loads(open('client_secrets.json', 'r')
@@ -22,6 +30,23 @@ engine = create_engine("sqlite:///restaurantmenu.db")
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+# Helper Function: login checker (Decorator)
+def login_checker(f):
+    def wrapper():
+        if 'username' not in login_session:
+            flash('You are not allowed to enter this page')
+            return redirect('/')
+        f()
+    return wrapper
+
+
+def user_existence(username):
+    available_users = session.query(User).all()
+    if any([u.name == username for u in available_users]):
+    else:
+        user = User(name=username)
+        session.add(user)
 
 
 # main page method
@@ -36,10 +61,9 @@ def show_restaurant():
 
 
 # Adding new restaurant page
+@login_checker
 @app.route('/restaurants/add', methods=["GET", "POST"])
 def add_new_restaurant():
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == "POST":
         if request.form['name']:
             newID = session.query(Restaurant).count() + 1
@@ -53,10 +77,14 @@ def add_new_restaurant():
 
 
 # Edit an existing restaurant page
+@login_checker
 @app.route('/restaurants/<int:restaurantID>/edit', methods=["POST", "GET"])
 def edit_restaurant(restaurantID):
-    if 'username' not in login_session:
-        return redirect('/login')
+    user = session.query(User).filter_by(name=login_session['username']).first()
+    restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
+    if restaurant.user_id != user.id:
+        flash('{} has no access to this data modification'.format(user.name))
+        return redirect('/')
     if request.method == "POST":
         if request.form['name']:
             name = request.form['name']
@@ -72,10 +100,14 @@ def edit_restaurant(restaurantID):
 
 
 # Delete an existing restaurant page
+@login_checker
 @app.route('/restaurants/<int:restaurantID>/delete', methods=["GET", "POST"])
 def delete_restaurant(restaurantID):
-    if 'username' not in login_session:
-        return redirect('/login')
+    user = session.query(User).filter_by(name=login_session['username']).first()
+    restaurant = session.query(Restaurant).filter_by(id=restaurantID).first()
+    if restaurant.user_id != user.id:
+        flash('{} has no access to this data modification'.format(user.name))
+        return redirect('/')
     if request.method == "POST":
         restaurant = session.query(Restaurant).filter_by(id=restaurantID).one()
         name = restaurant.name
@@ -101,6 +133,7 @@ def show_menuitem(restaurantID):
 
 
 # Add a new menu item
+@login_checker
 @app.route('/restaurants/<int:restaurantID>/add', methods=["GET", "POST"])
 def add_new_menuitem(restaurantID):
     if 'username' not in login_session:
@@ -124,11 +157,15 @@ def add_new_menuitem(restaurantID):
 
 
 # Edit an existing menu item
+@login_checker
 @app.route('/restaurants/<int:restaurantID>/'
            'edit/<int:menuitemID>', methods=["GET", "POST"])
 def edit_menuitem(restaurantID, menuitemID):
-    if 'username' not in login_session:
-        return redirect('/login')
+    user = session.query(User).filter_by(name=login_session['username']).first()
+    menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
+    if menuitem.user_id != user.id:
+        flash('{} has no access to this data modification'.format(user.name))
+        return redirect('/')
     if request.method == "POST":
         if request.form['name'] and \
                 request.form['description'] and \
@@ -150,11 +187,15 @@ def edit_menuitem(restaurantID, menuitemID):
 
 
 # Delete an existing menu item
+@login_checker
 @app.route('/restaurant/<int:restaurantID>/delete/'
            '<int:menuitemID>', methods=["GET", "POST"])
 def delete_menuitem(restaurantID, menuitemID):
-    if 'username' not in login_session:
-        return redirect('/login')
+    user = session.query(User).filter_by(name=login_session['username']).first()
+    menuitem = session.query(MenuItem).filter_by(id=menuitemID).first()
+    if menuitem.user_id != user.id:
+        flash('{} has no access to this data modification'.format(user.name))
+        return redirect('/')
     if request.method == "POST":
         item = session.query(MenuItem).filter_by(id=menuitemID).one()
         name = item.name
@@ -257,6 +298,9 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
+
+    #Check if user exist in the data base amd add if not...
+    user_existence(login_session['username'])
 
     output = '<body>'
     output += '<h1>Welcome, '
